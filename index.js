@@ -11,6 +11,7 @@ const startStopBt = document.querySelector('#start-pause');
 const textTimer = document.querySelector('#text-timer');
 const simbolTimer = document.querySelector('.app__card-primary-butto-icon');
 const timer = document.querySelector('#timer');
+const sessaoTarefa = document.querySelector('.app__section-task-content');
 const musica = new Audio('./sons/luna-rise-part-one.mp3');
 musica.loop = true;
 const playSong = new Audio('./sons/play.wav');
@@ -36,6 +37,8 @@ const contagemRegressiva = () => {
       document.dispatchEvent(event);
     }
     timerSong.play();
+    textTimer.textContent = 'Começar';
+    simbolTimer.setAttribute("src", "./imagens/play_arrow.png");
     zerarInterval();
     return;
   }
@@ -50,6 +53,10 @@ startStopBt.addEventListener('click', () => {
     return;
   }
 
+  if (tempoInicial == 0) {
+    tempoInicial = 1500;
+  }
+
   playSong.play();
   textTimer.textContent = "Pausar";
   simbolTimer.setAttribute("src", "./imagens/pause.png");
@@ -61,18 +68,21 @@ focoBt.addEventListener('click', () => {
   tempoInicial = 1500;
   alterarContexto('foco');
   focoBt.classList.add('active');
+  sessaoTarefa.classList.remove('hidden');
 });
 
 curtoBt.addEventListener('click', () => {
-  tempoInicial = 900;
+  tempoInicial = 300;
   alterarContexto('descanso-curto');
   curtoBt.classList.add('active');
+  sessaoTarefa.classList.add('hidden');
 });
 
 longoBt.addEventListener('click', () => {
   tempoInicial = 900;
   alterarContexto('descanso-longo')
   longoBt.classList.add('active');
+  sessaoTarefa.classList.add('hidden');
 });
 
 function alterarContexto(contexto) {
